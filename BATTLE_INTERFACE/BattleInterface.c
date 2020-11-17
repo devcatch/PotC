@@ -13,6 +13,8 @@
 #define BI_ICONS_ST_COMMAND		2
 #define BI_ICONS_ST_TARGETING	3
 
+int bi_time_scale;
+
 int bi_icons_ShowType;
 int bi_icons_CommandMode;
 
@@ -102,6 +104,12 @@ void InitBattleInterface()
 
 	CreateILogAndActions(LOG_FOR_SEA);
 	Log_SetActiveAction("Nothing");
+
+	CI_CreateAndSetControls( "", "TimeScaleIncrease", CI_GetKeyCode("VK_ADD"), 0, false );
+	CI_CreateAndSetControls( "", "TimeScaleDecrease", CI_GetKeyCode("VK_SUBTRACT"), 0, false );
+
+	bi_time_scale = 10;
+	SetTimeScale(bi_time_scale / 10.0);
 }
 
 ref BI_GetFortRelation()
@@ -1727,19 +1735,26 @@ ref procCheckEnableShip()
 void BI_ProcessControlPress()
 {
 	string ControlName = GetEventData();
+	
+	int delta;
 
-	if(ControlName=="TimeScale")
+	if(ControlName=="TimeScaleIncrease" && bi_time_scale < 300)
 	{
-		if(IsPerkIntoList("TimeSpeed"))
-		{
-			SetTimeScale(1.0);
-			DelPerkFromActiveList("TimeSpeed");
-		}
-		else
-		{
-			SetTimeScale(GetSeaTimeScale());
-			AddPerkToActiveList("TimeSpeed");
-		}
+		delta = 10;
+		if (bi_time_scale < 10) delta = 1;
+		bi_time_scale = bi_time_scale + delta;
+		SetTimeScale(bi_time_scale / 10.0);
+		Log_SetStringToLog("TimeScaleIncrease");
+		Log_SetStringToLog("New time scale" + bi_time_scale);
+	}
+	if(ControlName=="TimeScaleDecrease" && bi_time_scale > 1)
+	{
+		delta = 1;
+		if (bi_time_scale > 10) delta = 10;
+		bi_time_scale = bi_time_scale - delta;
+		SetTimeScale(bi_time_scale / 10.0);
+		Log_SetStringToLog("TimeScaleDecrease");
+		Log_SetStringToLog("New time scale" + bi_time_scale);
 	}
 }
 
