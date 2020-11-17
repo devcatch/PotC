@@ -5,6 +5,8 @@ int g_intRetVal;
 
 bool bDisableFastReload = false;
 
+int lbi_time_scale;
+
 #define	BLI_UPDATE_PERIOD	500
 #event_handler("evntBattleCommandSound","procBattleCommandSound");
 
@@ -33,6 +35,11 @@ void InitBattleLandInterface()
 	SetEventHandler(EVENT_LOCATION_LOAD,"StartBattleLandInterface",0);
 	SetEventHandler(EVENT_LOCATION_UNLOAD,"EndBattleLandInterface",0);
 	LoadLIStates();
+
+	SetEventHandler("Control Activation","BLI_ProcessControlPress",0);
+
+	lbi_time_scale = 10;
+	SetTimeScale(lbi_time_scale / 10.0);
 }
 
 void BLI_EnableShow()
@@ -80,6 +87,38 @@ void StartBattleLandInterface()
 
 	Event("evntBLI_Update");
 	Event("evntFindDialogChar");
+
+	CI_CreateAndSetControls( "", "BLI_TimeScaleIncrease", CI_GetKeyCode("VK_ADD"), 0, false );
+	CI_CreateAndSetControls( "", "BLI_TimeScaleDecrease", CI_GetKeyCode("VK_SUBTRACT"), 0, false );
+
+	Log_SetStringToLog("StartBattleLandInterface");
+}
+
+void BLI_ProcessControlPress()
+{
+	Log_SetStringToLog("BLI_ProcessControlPress");
+	string ControlName = GetEventData();
+	
+	int delta;
+
+	if(ControlName=="BLI_TimeScaleIncrease" && lbi_time_scale < 300)
+	{
+		delta = 10;
+		if (lbi_time_scale < 10) delta = 1;
+		lbi_time_scale = lbi_time_scale + delta;
+		SetTimeScale(lbi_time_scale / 10.0);
+		Log_SetStringToLog("BLI_TimeScaleIncrease");
+		Log_SetStringToLog("New time scale" + lbi_time_scale);
+	}
+	if(ControlName=="BLI_TimeScaleDecrease" && lbi_time_scale > 1)
+	{
+		delta = 1;
+		if (lbi_time_scale > 10) delta = 10;
+		lbi_time_scale = lbi_time_scale - delta;
+		SetTimeScale(lbi_time_scale / 10.0);
+		Log_SetStringToLog("BLI_TimeScaleDecrease");
+		Log_SetStringToLog("New time scale" + lbi_time_scale);
+	}
 }
 
 ref BLI_CheckCommand()
@@ -243,6 +282,8 @@ void EndBattleLandInterface()
 	DelEventHandler("evntPerkAgainUsable","BLI_RefreshCommandMenu");
 
 	Log_SetActiveAction("Nothing");
+
+	Log_SetStringToLog("EndBattleLandInterface");
 }
 
 void BLI_SetObjectData()
