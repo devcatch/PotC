@@ -35,11 +35,6 @@ void InitBattleLandInterface()
 	SetEventHandler(EVENT_LOCATION_LOAD,"StartBattleLandInterface",0);
 	SetEventHandler(EVENT_LOCATION_UNLOAD,"EndBattleLandInterface",0);
 	LoadLIStates();
-
-	SetEventHandler("Control Activation","BLI_ProcessControlPress",0);
-
-	lbi_time_scale = 10;
-	SetTimeScale(lbi_time_scale / 10.0);
 }
 
 void BLI_EnableShow()
@@ -84,40 +79,38 @@ void StartBattleLandInterface()
 	SetEventHandler("Location_CharacterEntryToLocator", "BLI_ChrEnterToLocation", 0);
 	SetEventHandler("Location_CharacterExitFromLocator", "BLI_ChrExitFromLocation", 0);
 	SetEventHandler("evntPerkAgainUsable","BLI_RefreshCommandMenu",0);
+	SetEventHandler("Control Activation","BLI_ProcessControlPress",0);
 
 	Event("evntBLI_Update");
 	Event("evntFindDialogChar");
 
-	CI_CreateAndSetControls( "", "BLI_TimeScaleIncrease", CI_GetKeyCode("VK_ADD"), 0, false );
-	CI_CreateAndSetControls( "", "BLI_TimeScaleDecrease", CI_GetKeyCode("VK_SUBTRACT"), 0, false );
+	lbi_time_scale = 10;
+	SetTimeScale(lbi_time_scale / 10.0);
 
 	Log_SetStringToLog("StartBattleLandInterface");
 }
 
 void BLI_ProcessControlPress()
 {
-	Log_SetStringToLog("BLI_ProcessControlPress");
 	string ControlName = GetEventData();
 	
 	int delta;
 
-	if(ControlName=="BLI_TimeScaleIncrease" && lbi_time_scale < 300)
+	if(ControlName=="TimeScaleIncrease" && lbi_time_scale < 300)
 	{
 		delta = 10;
 		if (lbi_time_scale < 10) delta = 1;
 		lbi_time_scale = lbi_time_scale + delta;
 		SetTimeScale(lbi_time_scale / 10.0);
-		Log_SetStringToLog("BLI_TimeScaleIncrease");
-		Log_SetStringToLog("New time scale" + lbi_time_scale);
+		Log_SetStringToLog("New time scale " + lbi_time_scale);
 	}
-	if(ControlName=="BLI_TimeScaleDecrease" && lbi_time_scale > 1)
+	if(ControlName=="TimeScaleDecrease" && lbi_time_scale > 1)
 	{
 		delta = 1;
 		if (lbi_time_scale > 10) delta = 10;
 		lbi_time_scale = lbi_time_scale - delta;
 		SetTimeScale(lbi_time_scale / 10.0);
-		Log_SetStringToLog("BLI_TimeScaleDecrease");
-		Log_SetStringToLog("New time scale" + lbi_time_scale);
+		Log_SetStringToLog("New time scale " + lbi_time_scale);
 	}
 }
 
@@ -280,6 +273,7 @@ void EndBattleLandInterface()
 	DelEventHandler("Location_CharacterEntryToLocator", "BLI_ChrEnterToLocation");
 	DelEventHandler("Location_CharacterExitFromLocator", "BLI_ChrExitFromLocation");
 	DelEventHandler("evntPerkAgainUsable","BLI_RefreshCommandMenu");
+	DelEventHandler("Control Activation","BLI_ProcessControlPress");
 
 	Log_SetActiveAction("Nothing");
 

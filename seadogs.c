@@ -373,6 +373,9 @@ void LoadGame_continue()
 {
 	DelEventHandler("frame","LoadGame_continue");
 	LoadEngineState(Characters[0].savegamename);
+
+	CI_CreateAndSetControls( "", "TimeScaleIncrease", CI_GetKeyCode("VK_ADD"), 0, false );
+	CI_CreateAndSetControls( "", "TimeScaleDecrease", CI_GetKeyCode("VK_SUBTRACT"), 0, false );
 }
 
 void InterfaceDoExit()
@@ -639,37 +642,11 @@ void NewGame_continue()
 	LoadMainCharacterInFirstLocation(sTeleportLocName, "reload1", "Oxbay_port");
 
 	ReloadProgressEnd();
+
+	CI_CreateAndSetControls( "", "TimeScaleIncrease", CI_GetKeyCode("VK_ADD"), 0, false );
+	CI_CreateAndSetControls( "", "TimeScaleDecrease", CI_GetKeyCode("VK_SUBTRACT"), 0, false );
 }
 
-/*
-void NewGame()
-{
-	DeleteEntities();
-	Environment.date.hour = 14.0;
-	Environment.date.min = 0.0;
-	Environment.date.sec = 0.0;
-	Environment.time = 14.0;
-	Environment.date.year = 1630;
-	Environment.date.month = 8;
-	Environment.date.day = 15;
-
-	DelEventHandler("frame","NewGame");
-	if(LoadSegment("Interface\BaseInterface.c"))
-	{
-		InitBaseInterfaces();
-		UnloadSegment("Interface\BaseInterface.c");
-	}
-	InitGame();
-	
-	InterfaceStates.Buttons.Resume.enable = true;
-	InterfaceStates.Buttons.Save.enable = true;
-	InterfaceStates.Buttons.Load.enable = true;
-	//PlayMusic("MW battle2.mp3");
-	sTeleportLocName = "Oxbay_port";
-	LoadMainCharacterInFirstLocation(sTeleportLocName, "reload2", sTeleportLocName);
-
-}
-*/
 void InitGame()
 {
 	LayerCreate("realize", 1);

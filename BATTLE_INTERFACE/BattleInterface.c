@@ -105,9 +105,6 @@ void InitBattleInterface()
 	CreateILogAndActions(LOG_FOR_SEA);
 	Log_SetActiveAction("Nothing");
 
-	CI_CreateAndSetControls( "", "TimeScaleIncrease", CI_GetKeyCode("VK_ADD"), 0, false );
-	CI_CreateAndSetControls( "", "TimeScaleDecrease", CI_GetKeyCode("VK_SUBTRACT"), 0, false );
-
 	bi_time_scale = 10;
 	SetTimeScale(bi_time_scale / 10.0);
 }
@@ -1744,7 +1741,6 @@ void BI_ProcessControlPress()
 		if (bi_time_scale < 10) delta = 1;
 		bi_time_scale = bi_time_scale + delta;
 		SetTimeScale(bi_time_scale / 10.0);
-		Log_SetStringToLog("TimeScaleIncrease");
 		Log_SetStringToLog("New time scale" + bi_time_scale);
 	}
 	if(ControlName=="TimeScaleDecrease" && bi_time_scale > 1)
@@ -1753,7 +1749,6 @@ void BI_ProcessControlPress()
 		if (bi_time_scale > 10) delta = 10;
 		bi_time_scale = bi_time_scale - delta;
 		SetTimeScale(bi_time_scale / 10.0);
-		Log_SetStringToLog("TimeScaleDecrease");
 		Log_SetStringToLog("New time scale" + bi_time_scale);
 	}
 }
