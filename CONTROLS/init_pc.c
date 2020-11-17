@@ -24,7 +24,7 @@ void ExternControlsInit(bool bFirst)
 	CI_CreateAndSetControls( "PrimaryLand", "ChrCamCameraSwitch", CI_GetKeyCode("VK_TAB"), 0, true );
 
 		// ship follow camera
-	CI_CreateAndSetControls( "", "ShipCamera_Turn_V", 257, INVERSE_CONTROL, false );
+	CI_CreateAndSetControls( "", "ShipCamera_Turn_V", 257, 0, false );
 	CI_CreateAndSetControls( "", "ShipCamera_Turn_H", 256, 0, false );
 	CI_CreateAndSetControls( "Sailing3Pers", "ShipCamera_Forward", CI_GetKeyCode("VK_LBUTTON"), 0, true );
 	CI_CreateAndSetControls( "Sailing3Pers", "ShipCamera_Backward", CI_GetKeyCode("VK_RBUTTON"), 0, true );
