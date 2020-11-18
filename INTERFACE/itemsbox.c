@@ -776,12 +776,9 @@ void ThatOneAndEquiped(string itmName1, string itmName2)
 
 	if( IsEquipCharacterByItem(g_refItems,itmName2) )
 	{
-		if( GetCharacterItem(g_refItems,itmName2)<=1 )
-		{
-			SetSelectable("ONEUP_BUTTON",false);
-		}
-		SetSelectable("ALLUP_BUTTON",false);
-		SetSelectable("SWAP_BUTTON",false);
+		SetSelectable("ONEUP_BUTTON",true);
+		SetSelectable("ALLUP_BUTTON",true);
+		SetSelectable("SWAP_BUTTON",true);
 	}
 }
 
