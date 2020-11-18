@@ -5,7 +5,7 @@ int g_intRetVal;
 
 bool bDisableFastReload = false;
 
-int lbi_time_scale;
+int lbi_time_scale = 10;
 
 #define	BLI_UPDATE_PERIOD	500
 #event_handler("evntBattleCommandSound","procBattleCommandSound");
@@ -84,10 +84,7 @@ void StartBattleLandInterface()
 	Event("evntBLI_Update");
 	Event("evntFindDialogChar");
 
-	lbi_time_scale = 10;
 	SetTimeScale(lbi_time_scale / 10.0);
-
-	Log_SetStringToLog("StartBattleLandInterface");
 }
 
 void BLI_ProcessControlPress()
@@ -276,8 +273,6 @@ void EndBattleLandInterface()
 	DelEventHandler("Control Activation","BLI_ProcessControlPress");
 
 	Log_SetActiveAction("Nothing");
-
-	Log_SetStringToLog("EndBattleLandInterface");
 }
 
 void BLI_SetObjectData()

@@ -13,7 +13,7 @@
 #define BI_ICONS_ST_COMMAND		2
 #define BI_ICONS_ST_TARGETING	3
 
-int bi_time_scale;
+int bi_time_scale = 10;
 
 int bi_icons_ShowType;
 int bi_icons_CommandMode;
@@ -105,7 +105,6 @@ void InitBattleInterface()
 	CreateILogAndActions(LOG_FOR_SEA);
 	Log_SetActiveAction("Nothing");
 
-	bi_time_scale = 10;
 	SetTimeScale(bi_time_scale / 10.0);
 }
 
@@ -1741,7 +1740,7 @@ void BI_ProcessControlPress()
 		if (bi_time_scale < 10) delta = 1;
 		bi_time_scale = bi_time_scale + delta;
 		SetTimeScale(bi_time_scale / 10.0);
-		Log_SetStringToLog("New time scale" + bi_time_scale);
+		Log_SetStringToLog("New time scale " + bi_time_scale);
 	}
 	if(ControlName=="TimeScaleDecrease" && bi_time_scale > 1)
 	{
@@ -1749,7 +1748,7 @@ void BI_ProcessControlPress()
 		if (bi_time_scale > 10) delta = 10;
 		bi_time_scale = bi_time_scale - delta;
 		SetTimeScale(bi_time_scale / 10.0);
-		Log_SetStringToLog("New time scale" + bi_time_scale);
+		Log_SetStringToLog("New time scale " + bi_time_scale);
 	}
 }
 
