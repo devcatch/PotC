@@ -437,6 +437,7 @@ void ChangeItemsSlot()
 	SetUpDownUsed();
 	SetScrollsUsing();
 }
+
 void TakeOneItem()
 {
 	string itm2 = GetItemIDByOrder(false,nCurScroll2);
@@ -463,6 +464,7 @@ void TakeOneItem()
 	SetUpDownUsed();
 	SetScrollsUsing();
 }
+
 void GiveOneItem()
 {
 	string itm1 = GetItemIDByOrder(true,nCurScroll1);
